@@ -1,13 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as SQLite from 'expo-sqlite';
+import { FontAwesome5 } from '@expo/vector-icons';
 
-function FitnessScreen(){
+function FitnessScreen({ navigation }){
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight:() => (
+        <TouchableOpacity 
+        onPress={() => {
+           console.log("New Record!");
+        }}>
+          <FontAwesome5 name="running" size={24} color="black" style={{ marginRight:17}}/>
+        </TouchableOpacity>
+      )})
+  })
   return <View style={styles.container}>
-    <Text>Fitness Statistics</Text>
+    <Text>Push-Up Score</Text>
+    <Text>Sit-Up Score</Text>
+    <Text>2.4km Run Score</Text>
     </View>
 }
 
