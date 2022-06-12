@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Text, View, FlatList, StyleSheet } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase("fitness.db");
@@ -37,6 +37,12 @@ export default function FitnessScreen({ navigation, route }){
      navigation.navigate("Add Record");
   }
 
+  function deleteRecord(id){
+      db.transaction((tx)=>{
+          tx.executeSql(`DELETE FROM record Where id=${id}`)
+      },null,refreshRecord);
+  }
+
   useEffect(() => {
       if (route.params?.text) {
           db.transaction((tx) => {
@@ -63,8 +69,16 @@ export default function FitnessScreen({ navigation, route }){
            borderBottomWidth: 1,
            paddingTop: 20,
            paddingBottom: 20,
+           flexDirection:"row",
+           justifyContent:"space-between",
            }}>
          <Text style={{ fontSize: 16, textAlign:'left' }}>{item.title}</Text>
+         <TouchableOpacity onPress={() => deleteRecord(item.id)}>
+             <Ionicons
+                 name="trash"
+                 size={16}
+                 color="#944" />
+         </TouchableOpacity>
        </View>
       );
     }
