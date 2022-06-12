@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator mode="modal" headerMode="none">
+      <Stack.Navigator presentation="modal" headerShown= 'false' >
         <Stack.Screen 
         name="Fitness" 
         component={RecordStack} 

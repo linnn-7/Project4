@@ -11,12 +11,7 @@ export default function FitnessScreen({ navigation }){
     );
   
   function addRecord(){
-     let newRecord = {
-       title: "Sample new record",
-       done: false,
-       id: record.length.toString(),
-     };
-     setRecord([...record, newRecord]);
+     navigation.navigate("Add Record");
   }
   
     useEffect(() => {
