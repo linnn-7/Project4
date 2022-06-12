@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Text, View, FlatList, StyleSheet } from 'react-native';
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons, AntDesign } from '@expo/vector-icons';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase("fitness.db");
@@ -43,6 +43,10 @@ export default function FitnessScreen({ navigation, route }){
       },null,refreshRecord);
   }
 
+  function showTable(){
+      navigation.navigate("History");
+  }
+
   useEffect(() => {
       if (route.params?.text) {
           db.transaction((tx) => {
@@ -59,6 +63,16 @@ export default function FitnessScreen({ navigation, route }){
             <FontAwesome5 name="running" size={24} color="black" style={{ marginRight:17}}/>
           </TouchableOpacity>
         )})
+    })
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft:() => (
+                <TouchableOpacity onPress={showTable}>
+                    <AntDesign name="table" size={24} color="black" style={{ marginLeft:17}} />
+                </TouchableOpacity>
+            )
+        })
     })
     function renderItem({ item }) {
       return (

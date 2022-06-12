@@ -11,7 +11,7 @@ export default function RecordStack(){
        name="Record"
        component={FitnessScreen}
        options={{
-         headerTitle:"Records",
+         headerTitle:"Fitness Stats",
          headerTitleStyle: {
            fontWeight:"bold",
            fontSize:30,
