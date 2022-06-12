@@ -11,10 +11,14 @@ export default function AddScreen ({ navigation }) {
             onChangeText={(newText) => setText(newText)}
         />
         <View style={styles.buttons}>
-            <TouchableOpacity style={[styles.button, styles.submitButton]} onPress={() => navigation.goBack()}>
+            <TouchableOpacity 
+                style={[styles.button, styles.submitButton]} 
+                onPress={() => navigation.navigate("Record", { text })}>
                 <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => navigation.goBack()}>
+            <TouchableOpacity 
+                style={[styles.button, styles.cancelButton]} 
+                onPress={() => navigation.goBack()}>
                 <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
         </View>

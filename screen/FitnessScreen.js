@@ -1,18 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Text, View, FlatList, StyleSheet } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import * as SQLite from 'expo-sqlite';
 
-export default function FitnessScreen({ navigation }){
+const db = SQLite.openDatabase("fitness.db");
 
-    const [record, setRecord] = useState(
-      [
-        { title:"Push-Up Score is 5", done: false, id: "0"},
-      ]
-    );
+export default function FitnessScreen({ navigation, route }){
+
+  const [record, setRecord] = useState([]);
+
+  function refreshRecord() {
+      db.transaction((tx) => {
+          tx.executeSql(
+              "SELECT * FROM record",
+              null,
+              (txObj, {rows: {_array }}) => setRecord(_array),
+              (txObj, error) => console.log("Error", error)
+          )
+      })
+  }
+
+  useEffect(() => {
+      db.transaction((tx) => {
+          tx.executeSql(
+              `CREATE TABLE IF NOT EXISTS
+              record
+              (id INTEGER PRIMARY KEY AUTOINCREMENT,
+               title TEXT,
+               done INT);`
+          );
+      }, null, refreshRecord);
+  },[]
+  );
   
   function addRecord(){
      navigation.navigate("Add Record");
   }
+
+  useEffect(() => {
+      if (route.params?.text) {
+          db.transaction((tx) => {
+              tx.executeSql("INSERT INTO record (done, title) VALUES (0,?)",[route.params.text]);
+          },null,refreshRecord)
+      }
+  }, [route.params?.text])
   
     useEffect(() => {
       navigation.setOptions({

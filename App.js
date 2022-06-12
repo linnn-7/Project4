@@ -3,10 +3,6 @@ import React, { useEffect, useState } from 'react';
 import RecordStack from './screen/RecordStack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as SQLite from 'expo-sqlite';
-
-
-const db = SQLite.openDatabase("fitness.db");
 
 const Stack = createStackNavigator();
 
